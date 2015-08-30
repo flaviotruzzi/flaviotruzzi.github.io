@@ -90,7 +90,7 @@ time+p,article header+p{
 a{
 	text-decoration:none;
 	font-weight:600;
-	color:#f77;
+	color:#7177ED;
 	-webkit-transition:color 0.25s;
 	-moz-transition:color 0.25s;
 	-o-transition:color 0.25s;
@@ -102,15 +102,15 @@ a:visited{
 }
 
 a:focus{
-	color:#f77
+	color:#7177ED
 }
 
 a:hover{
-	color:#f44
+	color:#7177ED
 }
 
 a:active{
-	color:#f77
+	color:#7177ED
 }
 
 a.article-link{
@@ -122,15 +122,15 @@ a.article-link:visited{
 }
 
 a.article-link:focus{
-	color:#f77
+	color:#7177ED
 }
 
 a.article-link:hover{
-	color:#f77
+	color:#7177ED
 }
 
 a.article-link:active{
-	color:#f77
+	color:#7177ED
 }
 
 hr{
@@ -155,8 +155,8 @@ a.button{
 	margin-right:30px;
 	min-width:200px;
 	background-color:#fff;
-	border-color:#f77 #f77 #f77 #f77;
-	color:#f77;
+	border-color:#7177ED #7177ED #7177ED #7177ED;
+	color:#7177ED;
 	-webkit-transition-property:background-color,color,border-color;
 	-moz-transition-property:background-color,color,border-color;
 	-o-transition-property:background-color,color,border-color;
@@ -164,14 +164,14 @@ a.button{
 }
 
 a.button:hover{
-	background-color:#f77;
-	border-color:#f77 #f77 #f77 #f77;
+	background-color:#7177ED;
+	border-color:#7177ED #7177ED #7177ED #7177ED;
 	color:#fff
 }
 
 a.button:active{
-	background-color:#f44;
-	border-color:#f44 #f44 #f44 #f44;
+	background-color:#7177ED;
+	border-color:#7177ED #7177ED #7177ED #7177ED;
 	color:#fff
 }
 
@@ -428,7 +428,7 @@ body>footer p,body>footer a,body>footer i{
 }
 
 body>footer i.icon{
-	color:#f77;
+	color:#7177ED;
 	padding:0 3px
 }
 

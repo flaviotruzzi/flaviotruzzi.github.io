@@ -1,0 +1,17 @@
+name: Flavio Truzzi
+subname: Software Engineer / Big Data Scientist
+
+description: My personal blog
+url: http://flaviotruzzi.github.io
+
+markdown: redcarpet
+highlighter: true
+excerpt_separator: <!--more-->
+
+# Permalinks
+permalink: pretty
+
+# This is the list of pages to incldue in the header of the website.
+pages_list:       
+  About: '/about/'
+  Publications: '/publications/'

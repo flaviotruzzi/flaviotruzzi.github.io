@@ -46,11 +46,14 @@ disqus_shortname: holyshittech
 
 # Category descriptions (for archive pages)
 descriptions:
-  - cat: tech
+  - cat: Tech
     desc: "General tech category"
 
-  - cat: scala
-    desc: "Scala stuff"
+  - cat: Scala
+    desc: "Scala Stuff"
+
+  - cat: Python
+    dec: "Python Stuff"
 
 # Social icons and sharing options
 #

@@ -1,0 +1,10 @@
+---
+layout: page
+permalink: /404.html
+title:  "No Cookies for you"
+date:   2015-01-01 08:43:59
+---
+
+<a href="//assets/404.jpg" data-lightbox="404" data-title="Y U NOT FOUND">
+  <img src="//assets/404.jpg" title="No cookies 4 you!">
+</a>

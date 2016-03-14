@@ -55,6 +55,9 @@ descriptions:
   - cat: Python
     dec: "Python Stuff"
 
+  - cat: Spark
+    dec: "Spark Stuff"
+
 # Social icons and sharing options
 #
 # Social settings are used in two places:

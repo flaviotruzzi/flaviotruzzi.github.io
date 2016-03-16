@@ -111,7 +111,9 @@ Here we are configuring the format of our logs, and what we really want to log, 
 
 # Data
 
-Since we decide to build a simple word counting, I took the liberty of choosing the book [Pride and Prejudice, by Jane Austen](https://www.gutenberg.org/ebooks/1342.txt.utf-8), that is freely available through the amazing [Gutenberg project](https://www.gutenberg.org/). It is not that much data if you think that we usually think of using Spark to analyze huge amounts of data, however, this is just a toy project, a seed for starting your own projects.
+Since we decide to build a simple word counting, I took the liberty of choosing the book [Pride and Prejudice, by Jane Austen](https://www.gutenberg.org/ebooks/1342.txt.utf-8), that is freely available through the amazing [Gutenberg project](https://www.gutenberg.org/).
+
+That is not that much data when you consider that we usually want using Spark to analyze huge amounts of data, however, this is just a toy project, a seed for starting your own projects.
 
 The file consists of 701Kbytes, distributed through 13423 lines, and 124588 words.
 

@@ -42,7 +42,7 @@ jekyll-archives:
 disqus_shortname: holyshittech
 
 # Google analytics
-# ga_tracking_id: "UA-XXXX-1"
+ga_tracking_id: "UA-75172709-1"
 
 # Category descriptions (for archive pages)
 descriptions:

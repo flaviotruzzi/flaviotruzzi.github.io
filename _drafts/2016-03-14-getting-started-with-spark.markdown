@@ -8,7 +8,7 @@ tags:	scala spark
 cover:  https://images.unsplash.com/photo-1439707769435-4bf7b5f265ba?fit=crop&fm=jpg&h=400&q=100&w=1450
 ---
 
-I am using [Spark](http://spark.apache.org/) for quite sometime now. In this post I will explain how to setup a simple [Spark Self-Contained Application](http://spark.apache.org/docs/latest/quick-start.html#self-contained-applications) in a slightly different way than the one in the quick start documentation, IMHO, easier. At the end of this post we will have built another word counting application.
+I am using [Spark](http://spark.apache.org/) for quite some time now. In this post, I will explain how to setup a simple [Spark Self-Contained Application](http://spark.apache.org/docs/latest/quick-start.html#self-contained-applications) in a slightly different way than the one in the quick start documentation, IMHO, easier. At the end of this post, we will have built another word counting application.
 
 # Project Structure
 
@@ -55,11 +55,11 @@ libraryDependencies ++= Seq(
 enablePlugins(JavaAppPackaging)
 {% endhighlight %}
 
-Here we are only defining the name of our project `spark-seed` and our dependencies.
-We are using Spark 1.6.0 (`spark-core`), we also added the `spark-testing-base` that will
+We are just defining the name of our project `spark-seed` and our dependencies.
+We are using Spark 1.6.0 (`spark-core`), we also added the `spark-testing-base` that contains
 have some utilities to facilitate our testing environment.
 
-The last line is enabling the `SBT Native Packager` plugin that we are going to setup now ;)
+The last line is enabling the `SBT Native Packager` plugin that we are going to setup right now ;)
 
 On `plugins.sbt` add the following:
 
@@ -111,7 +111,7 @@ Here we are configuring the format of our logs, and what we really want to log, 
 
 # Data
 
-Since we decide to build a simple word counting, I took the liberty of choosing the book [Pride and Prejudice, by Jane Austen](https://www.gutenberg.org/ebooks/1342.txt.utf-8), that is freely available through the amazing [Gutenberg project](https://www.gutenberg.org/). It is not that much data if you think that we usually think of using Spark to analyze huge amounts of data, however this is just a toy project, a seed for starting your own projects.
+Since we decide to build a simple word counting, I took the liberty of choosing the book [Pride and Prejudice, by Jane Austen](https://www.gutenberg.org/ebooks/1342.txt.utf-8), that is freely available through the amazing [Gutenberg project](https://www.gutenberg.org/). It is not that much data if you think that we usually think of using Spark to analyze huge amounts of data, however, this is just a toy project, a seed for starting your own projects.
 
 The file consists of 701Kbytes, distributed through 13423 lines, and 124588 words.
 
@@ -182,7 +182,7 @@ That method returns an [RDD](https://spark.apache.org/docs/1.6.0/api/scala/index
 
 We can think the RDD as a distributed collection, which we can actually do something with it.
 
-With the data in our hands we need to actually process it somehow, for that, let's define a simple tokenizer function, that tokenize by splitting on spaces.
+With the data in our hands we need to actually process it somehow, for that, let's define a simple tokenizer function, that tokenize by splitting at every space.
 
 {% highlight scala %}
 def tokenize(text: RDD[String]): RDD[String] =
@@ -192,7 +192,7 @@ def tokenize(text: RDD[String]): RDD[String] =
 
 The code defined on the function `tokenize` is iterating over an `RDD` of strings, and flatMapping splitting on the space. The result of that operation is also an `RDD` of Strings, each String contains one *token* (as defined by our simple tokenizer).
 
-With that function we can create an RDD of tokens and finally count words. There are probably a lots of ways of doing it, here is one of those:
+With that function, we can create an RDD of tokens and finally count words. There are probably lots of ways of doing it, here is one of those:
 
 {% highlight scala %}
 val tokens = tokenize(book)
@@ -203,7 +203,7 @@ val tokenAndCount =
     .reduceByKey(_ + _)
 {% endhighlight %}
 
-On the code above we are creating a value with our tokens and then for each token, we are mapping it to a tuple consisting of the token and the number 1. After that we are using the `reduceByKey` method that come implicitly from the `PairRDDFunctions`. This method merge the values of the same key using reducing function, in this case a simple sum (`_ + _`).
+On the code above we are creating a value with our tokens and then for each token, we are mapping it to a tuple consisting of the token and the number 1. After that, we are using the `reduceByKey` method that comes implicitly from the `PairRDDFunctions`. This method merges the values of the same key using reducing function, in this case, a simple sum (`_ + _`).
 
 Ultimately, we need to save this work. We can easily do this with the method `saveAsTextFile`:
 
@@ -250,7 +250,7 @@ object Boot {
 
 # Adding Tests
 
-So we now need a simple way of testing our tokenize function without running the job, so, lets create a test on the test directory with the name `TokenizerSpec.scala`:
+So we now need a simple way of testing our tokenize function without running the job, so, let's create a test on the test directory with the name `TokenizerSpec.scala`:
 
 {% highlight scala %}
 import com.holdenkarau.spark.testing.SharedSparkContext
@@ -273,7 +273,7 @@ class TokenizerSpec extends FlatSpec with Matchers with SharedSparkContext {
 }
 {% endhighlight %}
 
-Here we are using the helper `SharedSparkContext` that we added as a dependency in the beginning, this trait adds a `SparkContext` to your test class under the name `sc`. After calling our `tokenize` function we are collecting the results and transforming it to a `Seq`, for tests it is ok, however be careful when using collect since it will load all the data into the driver, which may end in OutOfMemory exceptions.
+Here we are using the helper `SharedSparkContext` that we added as a dependency in the beginning of this post, this trait adds a `SparkContext` to your test class under the name `sc`. After calling our `tokenize` function we are collecting the results and transforming it to a `Seq`, for tests it is ok, however, be careful when using collect since it will load all the data into the driver, which may end in OutOfMemory exceptions.
 
 If we go now to our sbt console and type the command `test` we will see the following:
 
@@ -305,7 +305,7 @@ SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorSta
 >
 {% endhighlight %}
 
-So we found a problem, that our tokenizer functions is actually adding empty strings to our result. So we go back to our code and fix our functions:
+We found a problem! Our tokenizer function is actually adding empty strings to our result. So we go back to our code and fix our functions:
 
 {% highlight scala %}
 def tokenize(text: RDD[String]): RDD[String] =

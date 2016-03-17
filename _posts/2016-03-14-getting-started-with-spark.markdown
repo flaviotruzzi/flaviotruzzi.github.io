@@ -22,6 +22,9 @@ spark-seed
 ├── data
 │   └── input
 │       └── pg1342.txt
+├── project
+│   ├── build.properties
+│   └── plugins.sbt
 └── src
     ├── main
     │   ├── resources
@@ -55,9 +58,10 @@ libraryDependencies ++= Seq(
 enablePlugins(JavaAppPackaging)
 {% endhighlight %}
 
-We are just defining the name of our project `spark-seed` and our dependencies.
-We are using Spark 1.6.0 (`spark-core`), we also added the `spark-testing-base` that contains
-have some utilities to facilitate our testing environment.
+Here we define some basic stuff about our project, such as the name `spark-seed`,
+the version of our project, the scala version and our dependencies.
+We are using Spark 1.6.0 (`spark-core`), and we also added the `spark-testing-base` that
+contains some utilities to facilitate our testing environment.
 
 The last line is enabling the `SBT Native Packager` plugin that we are going to setup right now ;)
 
@@ -67,15 +71,15 @@ On `plugins.sbt` add the following:
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.6")
 {% endhighlight %}
 
-That add the `SBT Native Packaging` plugin, that we will use in order to package our application later. On the `build.properties` just drop the following:
+That added the `SBT Native Packaging` plugin, that we will use in order to package our application later. On the `build.properties` just drop the following:
 
 {% highlight properties %}
 sbt.version=0.13.11
 {% endhighlight %}
 
-This will configure sbt to use version `0.13.11`.
+This tell sbt to use its version `0.13.11`.
 
-Finally the last part of the structure that is not data neither actual code, let's configure our `logback.xml`, that should be put on `src/main/resources`.
+Finally, the last part of the structure that is not data neither actual code, let's configure our `logback.xml`, that should be put on `src/main/resources`.
 
 {% highlight xml %}
 <configuration debug="false">
@@ -88,23 +92,18 @@ Finally the last part of the structure that is not data neither actual code, let
         </encoder>
     </appender>
 
-    <logger name="httpclient" level="WARN"/>
-    <logger name="io.netty" level="WARN"/>
     <logger name="org.apache.commons" level="WARN"/>
     <logger name="org.apache.hadoop" level="WARN"/>
     <logger name="org.apache.spark.deploy.SparkHadoopUtil" level="INFO"/>
     <logger name="org.apache.spark.memory" level="WARN" />
     <logger name="org.apache.spark.scheduler" level="WARN"/>
-    <logger name="org.apache.spark.sql.catalyst.expressions.codegen" level="WARN"/>
     <logger name="org.apache.spark.storage" level="WARN"/>
     <logger name="org.apache.spark.ui" level="WARN" />
     <logger name="org.apache.spark.util" level="WARN"/>
-    <logger name="org.apache.spark" level="DEBUG"/>
     <logger name="org.apache.spark" level="WARN"/>
-    <logger name="org.jets3t" level="WARN"/>
-    <logger name="org.spark-project.jetty" level="WARN"/>
 
 </configuration>
+
 {% endhighlight %}
 
 Here we are configuring the format of our logs, and what we really want to log, running Spark on debug mode can be too cluttered.
@@ -124,9 +123,9 @@ The file consists of 701Kbytes, distributed through 13423 lines, and 124588 word
 
 # The actual code
 
-Finally, we can start with our code. Let's created the `Boot.scala` file, which will hold an object with our main function. I will start defining the main function, and add things step by step.
+Finally, let's start with our code. First, create the `Boot.scala` file, which will hold an object with our main function. I will start defining the main function, and add things step by step.
 
-First we need to create a [SparkConf](https://spark.apache.org/docs/1.6.0/api/java/org/apache/spark/SparkConf.html) object, this object holds the configuration, and once created it does not support changes, from the documentation:
+We need to create a [SparkConf](https://spark.apache.org/docs/1.6.0/api/java/org/apache/spark/SparkConf.html) object, this object holds the configuration, and once created, it can't be changed, from the documentation:
 
 >"... Note that once a SparkConf object is passed to Spark, it is cloned and can no longer be modified by the user. Spark does not support modifying the configuration at runtime."
 
@@ -182,7 +181,7 @@ That method returns an [RDD](https://spark.apache.org/docs/1.6.0/api/scala/index
 
 > "A Resilient Distributed Dataset (RDD), the basic abstraction in Spark. Represents an immutable, partitioned collection of elements that can be operated on in parallel. This class contains the basic operations available on all RDDs, such as map, filter, and persist. In addition, org.apache.spark.rdd.PairRDDFunctions contains operations available only on RDDs of key-value pairs, such as groupByKey and join; org.apache.spark.rdd.DoubleRDDFunctions contains operations available only on RDDs of Doubles; and org.apache.spark.rdd.SequenceFileRDDFunctions contains operations available on RDDs that can be saved as SequenceFiles. All operations are automatically available on any RDD of the right type (e.g. RDD[(Int, Int)] through implicit."
 
-We can think the RDD as a distributed collection, which we can actually do something with it.
+We can think of the RDD as a distributed collection.
 
 With the data in our hands we need to actually process it somehow, for that, let's define a simple tokenizer function, that tokenize by splitting at every space.
 
@@ -192,7 +191,7 @@ def tokenize(text: RDD[String]): RDD[String] =
     .flatMap(_.split(" "))    
 {% endhighlight %}
 
-The code defined on the function `tokenize` is iterating over an `RDD` of strings, and flatMapping splitting on the space. The result of that operation is also an `RDD` of Strings, each String contains one *token* (as defined by our simple tokenizer).
+The code defined on the function `tokenize` is iterating over an `RDD` of strings, and flatMapping splitting on the space. The result of that operation is also an `RDD` of Strings, each of these Strings contains one *token* (as defined by our simple tokenizer).
 
 With that function, we can create an RDD of tokens and finally count words. There are probably lots of ways of doing it, here is one of those:
 

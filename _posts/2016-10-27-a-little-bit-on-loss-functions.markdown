@@ -29,6 +29,11 @@ My friends defined the following process in order to see me drunk:
   2. If my prediction is correct, I can enjoy my beer or I can pass to the next sip
   3. If my prediction is wrong I need to drink the whole bottle and go to the next sip.
 
+This can be thought as a classification task, and in the end I should be able to classify
+if I am sipping or not my favorite beer 100 out 100 times. In this setting, when I misclassify
+I am forced to drink the whole bottle, and despite some fellow german colleagues may think that
+is not the goal here.
+
 So how can I train for this task?
 
 ## Definition

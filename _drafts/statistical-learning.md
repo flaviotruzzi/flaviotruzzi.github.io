@@ -28,7 +28,7 @@ My friends defined the following process in order to see me drunk:
   2. If my prediction is correct, I can enjoy my beer or I can pass to the next sip
   3. If my prediction is wrong I need to drink the whole bottle and go to the next sip.
 
-So how can I prepare?
+So how can I train for this task?
 
 ## Definition
 
@@ -39,7 +39,7 @@ the loss function, which is in fact the function that we want to minimize:
 $$ \mathbb{E}(L(x,y)) = \int \int L(x,y) g(x,y) dx\,dy $$
 
 where, $$g(x,y)$$ is the joint probability density function of $$X$$ and $$Y$$.
-In the book they use a different notation, that I found very unusual:
+In the book they use a different notation, which I found very unusual:
 
 $$ \mathbb{E}(L(x,y)) = \int L(x, y) Pr(dx, dy) $$
 
@@ -76,7 +76,6 @@ $$ f(x) = median(Y|X=x) $$
 
 The conditional median is a different measure, and it is more robust to noise, compared
 to the conditional average (remember that only one spurious element can make the average move a lot).
-
 However the L1 loss is less used because of the discontinuities in the derivatives.
 
 ### 0-1 Loss
@@ -87,3 +86,20 @@ $$ L(\hat{G}(X), G) $$, where $$\hat{G}(X)$$ is a function that given the featur
 element in the space $$\mathcal{G}$$, the set of possible classes. In this case, the expectation of the loss functions is:
 
 $$ \mathbb{E}(L(\hat{G}(X), G)) = \mathbb{E}_X \sum_{k=1}^{|\mathcal{G}|} L(\hat{G}(X), G_k) Pr(G_k | X)$$
+
+If we use the 0-1 loss there:
+
+$$ L(\hat{G}(X), G) = \begin{cases}
+    1,              & \text{if } \hat{G}(X) \neq G\\
+    0,              & \text{otherwise}
+\end{cases} $$
+
+we get as solution:
+
+$$ \begin{split} \hat{G}(X) &= \mathcal{G}_k \text{ if } Pr(\mathcal{G}|X=x) \\
+ &= \max_{g \in \mathcal{G}} Pr(g|X=x) \end{split}$$
+
+
+This is known as the Bayes classifier, which classify to the most probable class.
+
+If you want to see how you can implement some or all of these let me know :)

@@ -1,9 +1,10 @@
 ---
 layout: post
 title: A little bit on Loss Functions
-category: Statistical Learning
+category: Statistical-Learning
 date: 2016-10-22 19:41:00
 author: Flavio Truzzi
+cover: https://images.unsplash.com/photo-1436076863939-06870fe779c2?fit=crop&fm=jpg&h=400&q=100&w=1450
 ---
 
 Since the beginning of college, and my first step on my old lab I was always fascinated

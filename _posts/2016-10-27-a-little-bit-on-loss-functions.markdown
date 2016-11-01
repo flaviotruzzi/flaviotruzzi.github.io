@@ -171,7 +171,7 @@ Since my palate is not 100% accurate I have some errors on my measurements, caus
 
 ![Measurements](/assets/posts/loss-functions/measurements.png)
 
-Here we have 4 different beers with different characteristics. The code to generate this is available [here]().
+Here we have 4 different beers with different characteristics. The code to generate this is available [here](https://github.com/flaviotruzzi/flaviotruzzi.github.io/blob/master/assets/posts/loss-functions/plot.py).
 
 How can I use the result of equation $\eqref{eq:01loss}$ to find the beer that I am sipping? If we don't know anything about the underlying distributions, we need to figure out some way to approximate the probability $Pr$.
 

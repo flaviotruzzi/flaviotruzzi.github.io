@@ -188,7 +188,7 @@ where $\mu$ is the expectation of the distribution and $\sigma$ is the standard 
 With that in mind we can create an approximation for the probability:
 
 $$
- \widehat{Pr}(g | X=x) = \frac{1}{|g|} \sum_{i \in g} \exp\bigg( -\frac{d(X,i)}/2 \bigg)
+ \widehat{Pr}(g | X=x) = \frac{1}{|g|} \sum_{i \in g} \exp\bigg( -\frac{d(X,i)}{2} \bigg)
 $$
 
 where $d$ is the euclidian distance between point $X=x$ and point $i$. With this approximation we can plug $\widehat{Pr}$ back in equation $\eqref{eq:01loss}$.

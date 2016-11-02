@@ -47,6 +47,8 @@ bad_measurements_sweetness = np.concatenate([bad_beer_1_sweetness_m,
 good_measurement_points = np.dstack([good_alcohol_measurements, good_sweetness_measurements])[0]
 bad_measurement_points = np.dstack([bad_measurements_alcohol, bad_measurements_sweetness])[0]
 
+# First Plot
+
 fig = plt.figure()
 ax = fig.add_subplot(111)
 
@@ -70,10 +72,9 @@ plt.ylabel("sweetness")
 
 plt.legend(loc='lower left')
 
-# ax.set_xticks(np.arange(10))
-# ax.set_yticks(np.arange(5))
-
 plt.grid()
+
+# Second Plot
 
 def euclidian_distance(x1, x2):
     return np.sqrt((x1[0] - x2[0]) ** 2 + (x1[1] - x2[1]) ** 2)
@@ -108,47 +109,47 @@ sample_size = 50
 good_beer_samples = good_beer_sample(sample_size)
 bad_beer_samples = bad_beer_sample(sample_size)
 
-correct_classified_good = []
-wrong_classified_good = []
+true_positive = []
+false_negative = []
 
 for i in good_beer_samples:
     if (estimate_class(i) == 'GOOD'):
-        correct_classified_good.append(i)
+        true_positive.append(i)
     else:
-        wrong_classified_good.append(i)
+        false_negative.append(i)
 
-correct_classified_bad = []
-wrong_classified_bad = []
+true_negative = []
+false_positive = []
 
 for i in bad_beer_samples:
     if (estimate_class(i) == 'BAD'):
-        correct_classified_bad.append(i)
+        true_negative.append(i)
     else:
-        wrong_classified_bad.append(i)
+        false_positive.append(i)
 
 fig2 = plt.figure()
 
 ax2 = fig2.add_subplot(111)
 
-correct_classified_good = np.asarray(correct_classified_good)
-correct_classified_bad = np.asarray(correct_classified_bad)
-wrong_classified_good = np.asarray(wrong_classified_good)
-wrong_classified_bad = np.asarray(wrong_classified_bad)
+true_positive = np.asarray(true_positive)
+true_negative = np.asarray(true_negative)
+false_negative = np.asarray(false_negative)
+false_positive = np.asarray(false_positive)
 
-ax2.scatter(correct_classified_good[:,0],
-           correct_classified_good[:,1], marker='o',
+ax2.scatter(true_positive[:,0],
+           true_positive[:,1], marker='o',
            color='orange', label='Good beer - OK')
 
-ax2.scatter(correct_classified_bad[:, 0],
-           correct_classified_bad[:, 1], marker='x',
+ax2.scatter(true_negative[:, 0],
+           true_negative[:, 1], marker='x',
            color='blue', label='Bad beer - OK')
 
-ax2.scatter(wrong_classified_good[:, 0],
-           wrong_classified_good[:, 1], marker='o',
+ax2.scatter(false_negative[:, 0],
+           false_negative[:, 1], marker='o',
            color='red', label='Good beer - NOK')
 
-ax2.scatter(wrong_classified_bad[:, 0],
-           wrong_classified_bad[:, 1], marker='x',
+ax2.scatter(false_positive[:, 0],
+           false_positive[:, 1], marker='x',
            color='red', label='Bad beer - NOK')
 
 plt.xlim(0, 10)
@@ -159,6 +160,6 @@ plt.ylabel("sweetness")
 
 plt.legend(loc='lower left')
 
-accuracy = (len(correct_classified_bad) + len(correct_classified_good)) / (2 * sample_size)
-precision = 1.0 * len(correct_classified_good) / (len(correct_classified_good) + len(wrong_classified_good))
-recall = 1.0 * len(correct_classified_good) / (len(correct_classified_good) + len(wrong_classified_bad))
+accuracy = 1.0 * (len(true_negative) + len(true_positive)) / (2 * sample_size)
+precision = 1.0 * len(true_positive) / (len(true_positive) + len(false_positive))
+recall = 1.0 * len(true_positive) / (len(true_positive) + len(false_negative))

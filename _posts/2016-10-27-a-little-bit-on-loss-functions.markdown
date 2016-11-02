@@ -8,9 +8,9 @@ cover: https://images.unsplash.com/photo-1436076863939-06870fe779c2?fit=crop&fm=
 use_math: true
 ---
 
-Since the beginning of college, and my first step on my old lab, I was always fascinated with Machine Learning and Artificial Intelligence in general, and that was the reason I made my master on these topics later on.  
+Since the beginning of college and my first step on my old lab I was always fascinated with Machine Learning and Artificial Intelligence in general, and that was the reason why I made my master on these topics later on.
 
-So, no matter what kind of prediction I want to make, which function I want to fit, it will always end up on minimizing some cost function. Since I am reading an awesome  [book](https://www.amazon.com/Elements-Statistical-Learning-Prediction-Statistics/dp/0387848576 "The Elements of Statistical Learning"){:target="_blank"} that talks about this subject I thought I could write about it a little bit and keep this as my notes.
+No matter what kind of prediction I want to make or which function I want to fit, it will always end up on minimizing some cost function. Since I am reading an awesome  [book](https://www.amazon.com/Elements-Statistical-Learning-Prediction-Statistics/dp/0387848576 "The Elements of Statistical Learning"){:target="_blank"} that talks about this subject I thought I could write about it a little bit and keep this as my notes.
 
 Suppose I am seeking a function $f(X)$ for predicting $Y$. How can we measure success on this task?
 
@@ -20,21 +20,21 @@ A loss function is a function that measures the empirical error over a training 
 
 In order to make things more interesting my friends defined the following process:
 
-  1. I take a sip and make a prediction $ f(X) $;
+  1. I take a sip of an unknown beer and make a prediction $ f(X) $ (my beer, not my beer);
   2. If my prediction is correct, I can enjoy my beer or I can pass to the next sip;
   3. If my prediction is wrong I need to drink the whole bottle and go to the next sip.
 
 This is a classification task. The aim is to be able to classify if I am sipping or not my favorite beer 100 out 100 times.
 
-In this setting, when I misclassify I am forced to drink the whole bottle of beer.  And, despite some fellow german colleagues may think, that is not the goal here.
+In this setting, when I misclassify I am forced to drink the whole bottle of beer. And, despite of what some fellow German colleagues may think, that is not the goal here.
 
-Every time I make a wrong prediction I am forced to drink the  wrong beer. Getting drunk with the bad beer is a negative reinforcement whilst drinking the good beer is a positive reinforcement.
+Every time I make a wrong prediction I am forced to drink the wrong beer. Getting drunk with the bad beer is a negative reinforcement whilst drinking the good beer is a positive reinforcement.
 
 ## Definition
 
-I need to define a function $ L(f(X), Y) $  that will penalize mistakes in the predictions. There are infinite ways to define such a function, but we are going to look only at some of them.
+I need to define a function $ L(f(X), Y) $ that will penalize mistakes in the predictions. There are infinite ways to define such a function, however we are going to look only at some of them.
 
-First let's take a look on the expectation of the loss function, which is, in fact, the function that we want to minimize. In the book it is defined as:
+First let's take a look on the expectation of the loss function, which is in fact the function that we want to minimize. In the book it is defined as:
 
 $$
 \begin{equation}
@@ -52,7 +52,7 @@ $$
 
 where, $$p(x,y)$$ is the joint probability density function of $$X$$ and $$Y$$.
 
-I found [this explanation](http://stats.stackexchange.com/questions/67038/confused-by-derivation-of-regression-function) of the meaning of the $$Pr(dx, dy)$$ notation and how to derive the final equation. I'll just transcribe it here:
+I found [this explanation](http://stats.stackexchange.com/questions/67038/confused-by-derivation-of-regression-function) about the meaning of the $$Pr(dx, dy)$$ notation and how to derive the final equation. I'll just transcribe it here:
 
 $$
 \begin{equation}
@@ -79,7 +79,7 @@ $$
 \mathbb{E}(L(x,y)) = \mathbb{E}_X(\mathbb{E}_{Y|X} ( (Y - f(X))^2 ))
 $$
 
-We know that the function above is minimal when $Y = f(x)$, i.e. if we minimize the function pointwise we get the minimal value for the expected error. We can write $f(x)$ as:
+We know that the function above is minimal when $Y = f(x)$, i.e., if we minimize the function pointwise we get the minimal value for the expected error. We can write $f(x)$ as:
 
 $$
 f(x) = \text{argmin}_c \mathbb{E}_{Y|X} ([Y-c]^2 | X = x)
@@ -89,7 +89,7 @@ The solution of the expected value of the loss function is:
 
 $$ f(x) = \mathbb{E}(Y|X=x) $$
 
-that is the conditional expectation. This means that the best prediction of Y at any
+which is the conditional expectation. This means that the best prediction of Y at any
 point $$X=x$$ is the conditional mean (L2).
 
 {::comment}
@@ -131,7 +131,7 @@ If we take the derivative of the expectation $\eqref{eq:l1}$ and equal it to zer
 
 $$ f(x) = median(Y|X=x) $$
 
-The conditional median is a different measure. It is more robust to noise compared to the conditional average (remember that only one spurious element can make the average move ). Still, the L1 loss is less used because of the discontinuities in the derivatives.
+The conditional median is a different measure. It is more robust to noise compared to the conditional average (remember that only one spurious element can make the average move). Still, the L1 loss is less used because of the discontinuities in the derivatives.
 
 ### 0-1 Loss
 
@@ -159,7 +159,7 @@ $$
  $$
 
 
-This is known as the Bayes classifier, which classify to the most probable class.
+This is known as the Bayes classifier, which classifies to the most probable class.
 
 ### Back to the beer
 
@@ -183,7 +183,7 @@ pdf(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\sigma^2\pi}}\exp\bigg({\frac{-(x - \mu)^2
 \end{equation}
 $$
 
-where $\mu$ is the expectation of the distribution and $\sigma$ is the standard deviation. This equation tells that the probability decreases exponentially with the quadratic of difference between the point $x$ and $\mu$.
+where $\mu$ is the expectation of the distribution and $\sigma$ is the standard deviation. This equation tells that the probability decreases exponentially with the square of distance between the point $x$ and $\mu$.
 
 With that in mind we can create an approximation for the probability:
 
@@ -193,10 +193,10 @@ $$
 
 where $d$ is the euclidian distance between point $X=x$ and point $i$. With this approximation we can plug $\widehat{Pr}$ back in equation $\eqref{eq:01loss}$.
 
-Note that in the equation above we give much more importance to points that are near. You can imagine this as a k-nearest neighbors (which is, in fact, another approximation to $\eqref{eq:01loss}$).
+Note that in the equation above we give much more importance to points that are near. You can imagine this as a k-nearest neighbors (which is in fact another approximation to $\eqref{eq:01loss}$).
 
 
-So in order to test this classification procedure, I generated 50 points with the good beer distribution, and 50 points with one of the bad beers distribution (the distribution was randomly chosen). After that I applied our classification procedure that we defined above. Here are some stats:
+So in order to test this classification procedure, I generated 50 points with the good beer distribution, and 50 points with one of the bad beer's distribution (the distribution was randomly chosen). After that I applied our classification procedure that we defined above at equation $\eqref{eq:01loss}$, for each point that needs to be classified, I calculate $\widehat{Pr}$ for the both classes and classify this point to the class that have the highest $\widehat{Pr}$. Here are some stats:
 
 * Accuracy: 91%
 * Precision: 87.27%
@@ -206,7 +206,7 @@ Here is a plot of this evaluation:
 
 ![Evaluation](/assets/posts/loss-functions/classification.png)
 
-In the plot above the circle orange points are the ones that my predictor was able to correctly classify as the good beer, the blue crosses are the ones that the predictor was able to classify as the bad beer. The red circles are the false negatives, i.e. the good beer that I was unable to predict correctly, and the red crosses are the false positives, i.e, the bad beer that I wrongly assumed to be good.
+In the plot above the circle orange points are the ones that my predictor was able to correctly classify as the good beer, the blue crosses are the ones that the predictor was able to classify as the bad beer. The red circles are the false negatives, i.e., the good beer that I was unable to predict correctly, and the red crosses are the false positives, i.e, the bad beer that I wrongly assumed to be good.
 
 I hope you liked the long post.
 

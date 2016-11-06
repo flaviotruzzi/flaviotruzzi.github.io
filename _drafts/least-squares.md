@@ -8,7 +8,7 @@ cover: https://images.unsplash.com/photo-1462663608395-404cb6246eaf?fit=crop&fm=
 use_math: true
 ---
 
-Usually, I say that new is always better! However, with so many people talking about deep learning, they forget that some tasks do not require a complex model, and we can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code]().
+Usually, I say that new is always better! However, with so many people talking about deep learning, they forget that some tasks do not require a complex model, and we can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/05/least-squares.html#code).
 
 ## Linear Model
 
@@ -30,7 +30,7 @@ Normally when we think of linear model we think on first degree polynomials, but
 
 ## Least Squares
 
-The first method devised to fit this is called Least Squares (or ordinary least squares). It was first published by [Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre) who published the method in 1805, but it has a little controversy on who is actually the author.
+The first method devised to fit this is called Least Squares (or ordinary least squares). It was first published in 1805 by [Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre), but it has a little controversy on who is actually the author.
 
 The method was also published in 1808 by an American called [Robert Adrain](https://en.wikipedia.org/wiki/Robert_Adrain), but the most controversy comes from the great [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) who in 1809 said that he was already using the method since 1795. Usually Gauss is considered the father because he went further by connecting the method with the probability and to the Gaussian Distribution, the method was used to predict the future location of the minor planet Ceres which was discovered on 1st January of 1801. If you are into this kind of controversy [this](http://projecteuclid.org/download/pdf_1/euclid.aos/1176345451) can be a good reading material.
 
@@ -45,7 +45,11 @@ RSS(\beta) &= \sum_{i = 1}^{N} (Y_i - f(X_i))^2 \\
 \end{equation}
 $$
 
-This criterion tell us how much the model does not fit the data. Let's find it's minimum. First, rewriting to its matrix form:
+This criterion tell us how much the model does not fit the data.
+
+### Finding its minimum
+
+First, rewriting to its matrix form:
 
 $$
 \begin{equation}
@@ -242,17 +246,22 @@ $$
 
 where $(x_c, y_c)$ is the center of the ellipse and $\phi$ is the angle between the $X$-axis and the major axis of the ellipse.
 
-Let's create an ellipse, I defined that the center will be $\begin{bmatrix}xc& yc\end{bmatrix} = \begin{bmatrix}6& 12\end{bmatrix} $ and $\phi = -\frac{\pi}{8}$.
+Let's create an ellipse, I defined that the center will be $\begin{bmatrix}x_c& y_c\end{bmatrix} = \begin{bmatrix}6& 12\end{bmatrix} $ and $\phi = -\frac{\pi}{8}$, $a=4$ and $b=9$.
 
 {% highlight python %}
-# Ellipse example
-(xc, yc) = (6, 12)
+(xc, yc) = 6, 12
+(a, b) = 4, 9
+
+def calculate_x(t):
+    return xc + a*np.cos(t)*np.cos(phi) - b*np.sin(t)*np.sin(phi)
+
+def calculate_y(t):
+    return yc + a*np.cos(t)*np.sin(phi) + b *np.sin(t)*np.cos(phi)
 
 t = np.linspace(-np.pi, np.pi, 500)
-phi = -np.pi / 8
 
-x = xc +a*np.cos(t)*np.cos(phi) - b*np.sin(t)*np.sin(phi)
-y = yc + a*np.cos(t)*np.sin(phi) + b *np.sin(t)*np.cos(phi)
+x = calculate_x(t)
+y = calculate_y(t)
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -278,7 +287,59 @@ $$
 we are going to fit the following parameters:
 
 $$
-\beta = \begin{bmatrix} X_c & Y_c & a\,cos(\phi) & a\,sin(\phi) & b\,cos(\phi) & b\,sin(\phi) \end{bmatrix}
+\beta_x = \begin{bmatrix} X_c & a\,cos(\phi) & -b\,sin(\phi) \end{bmatrix}
 $$
 
-and afterwards, calculate $a$, $b$ and $phi$.
+$$
+\beta_y = \begin{bmatrix} Y_c &  & a\,sin(\phi) & b\,cos(\phi) \end{bmatrix}
+$$
+
+and afterwards, calculate $a$, $b$ and $\phi$. Before all that, we have to generate the samples that we are going to use:
+
+{% highlight python %}
+SAMPLE_SIZE = 200
+sample_idx = np.random.randint(0, 500, SAMPLE_SIZE)
+
+sampled_t = t[sample_idx]
+
+x_sample = calculate_x(sampled_t) + np.random.randn(SAMPLE_SIZE)
+y_sample = calculate_y(sampled_t) + np.random.randn(SAMPLE_SIZE)
+
+ax.scatter(x_sample, y_sample, label="Samples")
+plt.legend(loc="upper left")
+{% endhighlight %}
+
+Which gives us:
+
+![Ellipse with samples](/assets/posts/least-squares/sample_ellipse.png)
+
+To fit this we need to adapt our X, like we did for the other examples, in this case it will have the form: $t =  \begin{bmatrix} 1 & cos(t) & sin(t) \end{bmatrix}$. With that we can again use our function `train_coefficients` for both $X(t)$ and $Y(t)$, for that I used the sampled $x$ and $y$ that were defined in the code above.
+
+{% highlight python %}
+adapted_t = np.column_stack((np.ones(SAMPLE_SIZE), np.cos(sampled_t), np.sin(sampled_t)))
+
+beta_x = train_coefficients(adapted_t, x_sample)
+beta_y = train_coefficients(adapted_t, y_sample)
+
+xl_c, yl_c = beta_x[0], beta_y[0]
+
+a_cos = beta_x[1]
+n_b_sin = beta_x[2]
+
+a_sin = beta_y[1]
+b_cos = beta_y[2]
+
+xl = xl_c + a_cos * np.cos(t) + n_b_sin * np.sin(t)
+yl = yl_c + a_sin * np.cos(t) + b_cos * np.sin(t)
+
+ax.plot(xl, yl, label="Fitted Ellipse", color='r')
+ax.plot(xl_c, yl_c, label="Fitted Center", color='r', marker='d')
+
+plt.legend(loc="upper left")
+{% endhighlight %}
+
+The result looks like this:
+
+![Fitted Ellipse](/assets/posts/least-squares/fitted_ellipse.png)
+
+In the plot, we can see that the fitted ellipse (in red) is very close to the original one in blue.

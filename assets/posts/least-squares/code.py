@@ -94,12 +94,19 @@ beta = train_coefficients(x_train, y)
 print beta
 
 # Ellipse example
-(xc, yc) = (6, 12)
+(xc, yc) = 6, 12
+(a, b) = 4, 9
+
+def calculate_x(t):
+    return xc + a*np.cos(t)*np.cos(phi) - b*np.sin(t)*np.sin(phi)
+
+def calculate_y(t):
+    return yc + a*np.cos(t)*np.sin(phi) + b *np.sin(t)*np.cos(phi)
 
 t = np.linspace(-np.pi, np.pi, 500)
 
-x = xc +a*np.cos(t)*np.cos(phi) - b*np.sin(t)*np.sin(phi)
-y = yc + a*np.cos(t)*np.sin(phi) + b *np.sin(t)*np.cos(phi)
+x = calculate_x(t)
+y = calculate_y(t)
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -108,3 +115,28 @@ ax.plot(x, y, label="Ellipse")
 ax.plot(xc, yc, 'or', label="Center of Ellipse")
 plt.legend(loc="upper left")
 plt.grid()
+
+SAMPLE_SIZE = 200
+sample_idx = np.random.randint(0, 500, SAMPLE_SIZE)
+
+sampled_t = t[sample_idx]
+
+x_sample = calculate_x(sampled_t) + np.random.randn(SAMPLE_SIZE)
+y_sample = calculate_y(sampled_t) + np.random.randn(SAMPLE_SIZE)
+
+ax.scatter(x_sample, y_sample, label="Samples")
+plt.legend(loc="upper left")
+
+adapted_t = np.column_stack((np.ones(SAMPLE_SIZE), np.cos(sampled_t), np.sin(sampled_t)))
+
+beta_x = train_coefficients(adapted_t, x_sample)
+beta_y = train_coefficients(adapted_t, y_sample)
+
+xl_c, yl_c = beta_x[0], beta_y[0]
+
+tg_phi = beta_x[2] / beta_y[2]
+
+phi_l = np.arctan(tg_phi)
+
+a = beta_x[1] / phi_l
+b = beta_x[2] / phi_l

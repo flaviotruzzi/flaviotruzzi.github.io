@@ -8,7 +8,7 @@ cover: https://images.unsplash.com/photo-1462663608395-404cb6246eaf?fit=crop&fm=
 use_math: true
 ---
 
-Usually, I say that new is always better! Yet with so many people talking about deep learning we forget that some tasks do not require a complex model. We can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/05/least-squares.html#code).
+Usually, I say that new is always better! Yet with so many people talking about deep learning we forget that some tasks do not require a complex model. We can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/07/least-squares.html#code).
 
 ## Linear Model
 
@@ -30,11 +30,11 @@ Usually when we think of linear model we think on first-degree polynomials, but 
 
 ## Least Squares
 
-The first method devised to fit this is called Least Squares (or ordinary least squares). It was first published in 1805 by [Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre), but it has a little controversy on who is actually the author.
+The first method devised to fit this is called Least Squares (or ordinary least squares). It was first published in 1805 by [Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre){:target="_blank"}, but it has a little controversy on who is actually the author.
 
-The method was also published in 1808 by an American called [Robert Adrain](https://en.wikipedia.org/wiki/Robert_Adrain), but the most controversy comes from the great [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) who in 1809 said that he was already using the method since 1795. Usually, Gauss is considered the father because he went further by connecting the method with the probability and to the Gaussian Distribution, the method was used to predict the future location of the minor planet Ceres which was discovered on 1st January of 1801. If you are into this kind of controversy [this](http://projecteuclid.org/download/pdf_1/euclid.aos/1176345451) can be a good reading material.
+The method was also published in 1808 by an American called [Robert Adrain](https://en.wikipedia.org/wiki/Robert_Adrain){:target="_blank"}, but the most controversy comes from the great [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss){:target="_blank"} who in 1809 said that he was already using the method since 1795. Usually, Gauss is considered the father because he went further by connecting the method with the probability and to the Gaussian Distribution, the method was used to predict the future location of the minor planet Ceres which was discovered on 1st January of 1801. If you are into this kind of controversy [this](http://projecteuclid.org/download/pdf_1/euclid.aos/1176345451){:target="_blank"} can be a good reading material.
 
-Least Squares work by minimizing the sum of the [L2 Cost Function](/statistical-learning/2016/10/22/a-little-bit-on-loss-functions.html#l2-loss), this is usually called Residual Squared Sum (RSS):
+Least Squares work by minimizing the sum of the [L2 Cost Function](/statistical-learning/2016/10/22/a-little-bit-on-loss-functions.html#l2-loss){:target="_blank"}, this is usually called Residual Squared Sum (RSS):
 
 $$
 \begin{equation}
@@ -344,6 +344,6 @@ The result looks like this:
 
 The fitted ellipse (in red) is very close to the original one in blue.
 
-I hope you have enjoyed and that you now can predict the position of Ceres yourself!
+I hope you have enjoyed and that you now can predict the position of Ceres yourself! The full code used on the post is available [here](https://github.com/flaviotruzzi/flaviotruzzi.github.io/blob/master/assets/posts/least-squares/code.py){:target="_blank"}
 
 Cheers,

@@ -2,13 +2,13 @@
 layout: post
 title: Least Squares
 category: Statistical-Learning
-date: 2016-11-05 19:14:00
+date: 2016-11-06 23:50:00
 author: Flavio Truzzi
 cover: https://images.unsplash.com/photo-1462663608395-404cb6246eaf?fit=crop&fm=jpg&h=400&q=100&w=1450
 use_math: true
 ---
 
-Usually, I say that new is always better! However, with so many people talking about deep learning, they forget that some tasks do not require a complex model, and we can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/05/least-squares.html#code).
+Usually, I say that new is always better! Yet with so many people talking about deep learning we forget that some tasks do not require a complex model. We can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/05/least-squares.html#code).
 
 ## Linear Model
 
@@ -20,7 +20,7 @@ f(X) = \beta_0 + \sum_{j = 1}^{P} X_j \beta_j
 \end{equation}
 $$
 
-Normally when we think of linear model we think on first degree polynomials, but that is not what a linear model means. **A linear model is linear in the inputs** $X^T = (X_1, X_2, \dots, X_p)$, but this does not define how these inputs are defined. They can be:
+Usually when we think of linear model we think on first-degree polynomials, but that is not what a linear model means. **A linear model is linear in the inputs** $X^T = (X_1, X_2, \dots, X_p)$, but this does not define how these inputs are defined. They can be:
 
   - quantitative inputs;
   - transformation of the inputs (e.g., log, sqrt);
@@ -32,7 +32,7 @@ Normally when we think of linear model we think on first degree polynomials, but
 
 The first method devised to fit this is called Least Squares (or ordinary least squares). It was first published in 1805 by [Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre), but it has a little controversy on who is actually the author.
 
-The method was also published in 1808 by an American called [Robert Adrain](https://en.wikipedia.org/wiki/Robert_Adrain), but the most controversy comes from the great [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) who in 1809 said that he was already using the method since 1795. Usually Gauss is considered the father because he went further by connecting the method with the probability and to the Gaussian Distribution, the method was used to predict the future location of the minor planet Ceres which was discovered on 1st January of 1801. If you are into this kind of controversy [this](http://projecteuclid.org/download/pdf_1/euclid.aos/1176345451) can be a good reading material.
+The method was also published in 1808 by an American called [Robert Adrain](https://en.wikipedia.org/wiki/Robert_Adrain), but the most controversy comes from the great [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) who in 1809 said that he was already using the method since 1795. Usually, Gauss is considered the father because he went further by connecting the method with the probability and to the Gaussian Distribution, the method was used to predict the future location of the minor planet Ceres which was discovered on 1st January of 1801. If you are into this kind of controversy [this](http://projecteuclid.org/download/pdf_1/euclid.aos/1176345451) can be a good reading material.
 
 Least Squares work by minimizing the sum of the [L2 Cost Function](/statistical-learning/2016/10/22/a-little-bit-on-loss-functions.html#l2-loss), this is usually called Residual Squared Sum (RSS):
 
@@ -57,7 +57,7 @@ RSS(\beta) = (Y - X\beta)^T(Y - X\beta)
 \end{equation}
 $$
 
-here we are adding a 1 to as first column of $X$, this term is usually called bias. Taking its derivative with respect to $\beta$:
+here we are adding a 1 as first column of $X$, this term is usually called bias. Taking its derivative with respect to $\beta$:
 
 $$
 \frac{\partial RSS}{\partial \beta} = -2X^T(Y-X\beta)
@@ -84,7 +84,7 @@ $$
 \end{equation}
 $$
 
-The part $(X^TX)^{-1}X^T$ is sometimes called $H$, or the hat matrix. The reason for this is worthy of a **Ba dum tss**, since it is because it puts the hat on $Y$.
+The part $(X^TX)^{-1}X^T$ is sometimes called $H$, or the hat matrix. The reason for this is worthy of a **Ba dum tss**, since it is called that because it puts the hat on $Y$.
 
 There are some caveats that we need to keep in mind when using this. First, $X$ may not be full ranked, i.e., maybe there are linear dependents inputs, if that is the case it is important to remove those, it is quite common when working with images since the number of parameters $p$ may be much bigger than the number of test cases for the training. Note that this can also be tackled with regularization and other methods, which are not the scope of this post.
 
@@ -228,7 +228,7 @@ After the training we got: $\beta = \begin{bmatrix} 11.12 & 2.71828183 & 1.\end{
 
 ### Fitting an ellipse
 
-As usual, first the definition of an ellipse, in its parametric form:
+As usual, first the definition of an ellipse in its parametric form:
 
 $$
 \begin{equation}
@@ -291,10 +291,10 @@ $$
 $$
 
 $$
-\beta_y = \begin{bmatrix} Y_c &  & a\,sin(\phi) & b\,cos(\phi) \end{bmatrix}
+\beta_y = \begin{bmatrix} Y_c & a\,sin(\phi) & b\,cos(\phi) \end{bmatrix}
 $$
 
-and afterwards, calculate $a$, $b$ and $\phi$. Before all that, we have to generate the samples that we are going to use:
+applying least squares for the $X$ values and also for $Y$ values. And use those fitted values to make predictions for the position of the ellipse. Before all that, we have to generate the samples that we are going to use:
 
 {% highlight python %}
 SAMPLE_SIZE = 200
@@ -342,4 +342,8 @@ The result looks like this:
 
 ![Fitted Ellipse](/assets/posts/least-squares/fitted_ellipse.png)
 
-In the plot, we can see that the fitted ellipse (in red) is very close to the original one in blue.
+The fitted ellipse (in red) is very close to the original one in blue.
+
+I hope you have enjoyed and that you now can predict the position of Ceres yourself!
+
+Cheers,

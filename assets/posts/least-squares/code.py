@@ -96,6 +96,7 @@ print beta
 # Ellipse example
 (xc, yc) = 6, 12
 (a, b) = 4, 9
+phi = -np.pi/8
 
 def calculate_x(t):
     return xc + a*np.cos(t)*np.cos(phi) - b*np.sin(t)*np.sin(phi)
@@ -134,9 +135,16 @@ beta_y = train_coefficients(adapted_t, y_sample)
 
 xl_c, yl_c = beta_x[0], beta_y[0]
 
-tg_phi = beta_x[2] / beta_y[2]
+a_cos = beta_x[1]
+n_b_sin = beta_x[2]
 
-phi_l = np.arctan(tg_phi)
+a_sin = beta_y[1]
+b_cos = beta_y[2]
 
-a = beta_x[1] / phi_l
-b = beta_x[2] / phi_l
+xl = xl_c + a_cos * np.cos(t) + n_b_sin * np.sin(t)
+yl = yl_c + a_sin * np.cos(t) + b_cos * np.sin(t)
+
+ax.plot(xl, yl, label="Fitted Ellipse", color='r')
+ax.plot(xl_c, yl_c, label="Fitted Center", color='r', marker='d')
+
+plt.legend(loc="upper left")

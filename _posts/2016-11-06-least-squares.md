@@ -6,6 +6,9 @@ date: 2016-11-06 23:50:00
 author: Flavio Truzzi
 cover: https://images.unsplash.com/photo-1462663608395-404cb6246eaf?fit=crop&fm=jpg&h=400&q=100&w=1450
 use_math: true
+images:
+  - url: /assets/posts/least-squares/fitted_ellipse.png
+  - url: /assets/posts/least-squares/parabola.png
 ---
 
 Usually, I say that new is always better! Yet with so many people talking about deep learning we forget that some tasks do not require a complex model. We can still do great with more traditional models. Today I want to talk about how to fit a linear model! If you want you can jump to the [code](/statistical-learning/2016/11/06/least-squares.html#code).
